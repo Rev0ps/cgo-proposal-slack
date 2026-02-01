@@ -15,6 +15,19 @@ from slack import verify_slack_request
 app = Flask(__name__)
 
 
+@app.route("/", methods=["GET"])
+def index():
+    """Root route - confirms app is running."""
+    return jsonify({
+        "app": "CGO Proposal Slack",
+        "status": "running",
+        "endpoints": {
+            "health": "/health",
+            "slash_command": "POST /slack/cgo-proposal",
+        },
+    }), 200
+
+
 @app.route("/slack/cgo-proposal", methods=["POST"])
 def slack_cgo_proposal():
     """Handle Slack slash command POST."""
